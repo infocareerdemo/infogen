@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,17 +31,25 @@ import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
 import org.apache.poi.xslf.usermodel.XSLFTextRun;
 import org.apache.poi.xslf.usermodel.XSLFTextShape;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.infogen.dto.LeanDashboardDto;
 import com.infogen.dto.LeanProjectsDto;
+import com.infogen.entity.StockPrice;
+import com.infogen.service.StockPriceService;
 
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 public class PptController {
 
+	@Autowired
+	StockPriceService stockPriceService;
+	
 	public List<LeanDashboardDto> getLeanDashboardDataFromExcel() throws IOException {
 		String filelocation = "report//New Microsoft Excel Worksheet.xlsx";
 		FileInputStream fis = new FileInputStream(new File(filelocation));
